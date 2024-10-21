@@ -2,19 +2,36 @@ import java.util.Scanner;
 
 public class ExecptionHandling {
     public static void main(String[] args) {
-        System.out.println("please enter a number between 0 - 9 ");
-        Scanner myscan = new Scanner(System.in);
 
-            String input = myscan.nextLine();
+       {
+            try( Scanner myscan = new Scanner(System.in)){ // using resources. open scanner after each loop
+                while(true) {                              // closes it when its done
+                    try {
+                        System.out.println("please enter a number between 0 - 9 "); // prompt in the loop so it will run again
+                        String input = myscan.nextLine();
+                        int myNum = Integer.parseInt(input);// these throw an expection
+                        if (myNum >= 0 && myNum <= 9) {
+                            System.out.println("You entered " + myNum);
+                            break;
+                        } else {
+                            System.out.println("Wrong you donkey");
+                        }
 
-            int myNum = Integer.parseInt(input);
+                    }
+                    catch(NumberFormatException nf){
+                        System.out.println("wrong " + nf.getMessage());
+                    }
 
-            if (myNum >= 0 && myNum <= 9  ){
-                System.out.println("you entered " + myNum);
+                    catch(Exception e){
+                        System.out.println("wrong " + e.getMessage());
+                    }
+                }
             }
-            else{
-                System.out.println("Not a valid number");
-            }
+
+
+            // finally block not required when using try with resources
+
+        }
     }
 
 }
